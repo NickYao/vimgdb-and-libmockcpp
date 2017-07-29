@@ -1,0 +1,27 @@
+#!/bin/bash
+echo "generating ctags! please hold on!"
+if [ "$1"x != ""x ] ; then
+		cd $1
+fi
+rm -f *cscope.*
+rm -f tags
+ctags -R
+find . -name '*.h' > cscope.files
+find . -name '*.c' >> cscope.files
+find . -name '*.S' >> cscope.files
+find . -name '*.s' >> cscope.files
+find . -name '*.cc' >> cscope.files
+find . -name '*.cxx' >> cscope.files
+find . -name '*.cfg' >> cscope.files
+find . -name '*.mk' >> cscope.files
+find . -name '*eadme' >> cscope.files
+find . -name '*EADME' >> cscope.files
+find . -name '*.mk' >> cscope.files
+find . -name '*akefile' >> cscope.files
+echo "generating cscope files! please hold on!"
+if [ "$1"x = ""x ] ; then
+		cscope -bkq -i cscope.files 
+else
+		cscope -bkq -i cscope.files -P $1
+fi
+rm -f cscope.files
